@@ -1,7 +1,9 @@
 
-# Jenkins CICD Pipeline
+# Spring Boot based Java web application
 
-Jenkins Pipeline for Java spring boot based application using Maven, SonarQube,Docker, Argo CD, Helm and Kubernetes
+This is a simple Spring Boot based Java application that can be built using Maven. Sprint Boot dependencies are handled using the pom.xml at the root directory of the repository.
+
+This is a MVC architecture based application where controller returns a login page with some login attributes to the view.
 
 ## Documentation
 
