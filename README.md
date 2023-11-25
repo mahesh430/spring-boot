@@ -9,7 +9,12 @@ We are going to implement the CICD pipleine using Jenkins, Maven
 
 ### Step 1: Launch an AWS EC2 Ubuntu Instance
 ![Alt text](image.png)
+### Configure Security Group:
 
+- Create a new security group or select an existing one.
+- Ensure to add a rule to allow SSH (port 22) for your IP address for secure access.
+- Add a custom TCP rule to allow port 8080 for Jenkins.
+![Alt text](image-1.png)
 ### Step 2: SSH into Your EC2 Instance
 
 1. **Find the Public IP**: Go to the EC2 dashboard, find your new instance, and copy its public IP address.
@@ -29,7 +34,7 @@ We are going to implement the CICD pipleine using Jenkins, Maven
 
 2. **Install Java**:
    ```bash
-   sudo apt install openjdk-11-jre
+   sudo apt install openjdk-11-jre -y
    ```
 
 3. **Verify Java Installation**:
@@ -69,6 +74,7 @@ We are going to implement the CICD pipleine using Jenkins, Maven
    - Go to `http://YourInstancePublicIP:8080`.
 
 2. **Unlock Jenkins**:
+![Alt text](image-2.png)
    - Retrieve the Administrator password:
      ```bash
      sudo cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -76,20 +82,8 @@ We are going to implement the CICD pipleine using Jenkins, Maven
    - Copy and paste this password into the Jenkins console to unlock it.
 
 3. **Complete the Setup**: Follow the on-screen instructions to complete the Jenkins setup.
-
-### Note on Security
-
-- It's recommended to restrict access to Jenkins and SSH only to known IPs for security.
-- Regularly update and patch your EC2 instance and Jenkins installation.
-- Consider setting up HTTPS for Jenkins for secure access.
-
-This setup will get your Jenkins instance running on an AWS EC2 Ubuntu server. You can then proceed with configuring Jenkins for your CI/CD pipeline, including Docker, Kubernetes, and other tools as needed.
-## Installation
-
-Install my-project with npm
-
-```bash
-  npm install my-project
-  cd my-project
-```
-    
+- Click on the Installed suggested plugins
+![Alt text](image-3.png)
+![Alt text](image-4.png)
+- Create Admin user as show below 
+![Alt text](image-5.png)
