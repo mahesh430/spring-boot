@@ -91,4 +91,4 @@ We are going to implement the CICD pipleine using Jenkins, Maven
 ### Step 5: Installing required plugins
  - Go to Manage Jenkins > Manage Plugins.
  - In the Available tab, search for "Docker Pipeline", "SonarQube Scanner" and click on install
- https://github.com/mahesh430/readme-images/blob/main/Screenshot%202023-11-25%20at%2010.29.27%20PM.png
+![Screenshot 2023-11-25 at 10 29 27 PM](https://github.com/mahesh430/spring-boot/assets/16769593/f190b836-c20a-45ad-be57-179f11a97f28)
