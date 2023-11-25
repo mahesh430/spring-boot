@@ -8,13 +8,14 @@ We are going to implement the CICD pipleine using Jenkins, Maven
 # Jenkins Installation
 
 ### Step 1: Launch an AWS EC2 Ubuntu Instance
-![Alt text](image.png)
+![image](https://github.com/mahesh430/spring-boot/assets/16769593/b6c58a39-e07c-4fdb-9119-3f2eeb6ad3e1)
+
 ### Configure Security Group:
 
 - Create a new security group or select an existing one.
 - Ensure to add a rule to allow SSH (port 22) for your IP address for secure access.
 - Add a custom TCP rule to allow port 8080 for Jenkins.
-![Alt text](image-1.png)
+![image-1](https://github.com/mahesh430/spring-boot/assets/16769593/93e77da4-0a95-4467-93c4-4b61031848f2)
 ### Step 2: SSH into Your EC2 Instance
 
 1. **Find the Public IP**: Go to the EC2 dashboard, find your new instance, and copy its public IP address.
@@ -84,10 +85,10 @@ We are going to implement the CICD pipleine using Jenkins, Maven
 
 3. **Complete the Setup**: Follow the on-screen instructions to complete the Jenkins setup.
 - Click on the Installed suggested plugins
-![Alt text](image-3.png)
-![Alt text](image-4.png)
+![image-3](https://github.com/mahesh430/spring-boot/assets/16769593/cb32555e-d39a-4165-9533-a12b760a35c3)
+![image-4](https://github.com/mahesh430/spring-boot/assets/16769593/3f3b30fb-6381-4eca-84f2-4da735c53822)
 - Create Admin user as show below 
-![Alt text](image-5.png)
+![image-5](https://github.com/mahesh430/spring-boot/assets/16769593/fa3a7a82-2cd6-446b-a285-1dfea6f67798)
 
 ### Step 5: Installing required plugins
  - Go to Manage Jenkins > Manage Plugins.
