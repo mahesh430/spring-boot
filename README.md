@@ -8,13 +8,15 @@ Jenkins Pipeline for Java spring boot based application using Maven, SonarQube,D
 # Jenkins Installation
 
 ### Step 1: Launch an AWS EC2 Ubuntu Instance
-![Alt text](image.png)
+![image](https://github.com/mahesh430/spring-boot/assets/16769593/135323af-6f9b-4162-b6f0-7e0f81db091e)
+
 ### Configure Security Group:
 
 - Create a new security group or select an existing one.
 - Ensure to add a rule to allow SSH (port 22) for your IP address for secure access.
 - Add a custom TCP rule to allow port 8080 for Jenkins.
-![Alt text](image-1.png)
+![image-1](https://github.com/mahesh430/spring-boot/assets/16769593/794f8b3e-6585-4e73-bf2c-a41a2bc1489a)
+
 ### Step 2: SSH into Your EC2 Instance
 
 1. **Find the Public IP**: Go to the EC2 dashboard, find your new instance, and copy its public IP address.
@@ -83,12 +85,14 @@ Jenkins Pipeline for Java spring boot based application using Maven, SonarQube,D
 
 3. **Complete the Setup**: Follow the on-screen instructions to complete the Jenkins setup.
 - Click on the Installed suggested plugins
-![Alt text](image-3.png)
-![Alt text](image-4.png)
+![image-3](https://github.com/mahesh430/spring-boot/assets/16769593/cb32555e-d39a-4165-9533-a12b760a35c3)
+![image-4](https://github.com/mahesh430/spring-boot/assets/16769593/3f3b30fb-6381-4eca-84f2-4da735c53822)
+
 - Create Admin user as show below 
-![Alt text](image-5.png)
+![image-5](https://github.com/mahesh430/spring-boot/assets/16769593/fa3a7a82-2cd6-446b-a285-1dfea6f67798)
+
 
 ### Step 5: Installing required plugins
  - Go to Manage Jenkins > Manage Plugins.
  - In the Available tab, search for "Docker Pipeline", "SonarQube Scanner" and click on install
- ![Alt text](image-6.png)
+![image-6](https://github.com/mahesh430/spring-boot/assets/16769593/3c418a54-ee43-4e96-b604-f8a663adec11)
