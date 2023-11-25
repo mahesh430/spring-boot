@@ -74,7 +74,8 @@ We are going to implement the CICD pipleine using Jenkins, Maven
    - Go to `http://YourInstancePublicIP:8080`.
 
 2. **Unlock Jenkins**:
-![Alt text](image-2.png)
+
+![Screenshot 2023-11-25 at 10 15 29 PM](https://github.com/mahesh430/spring-boot/assets/16769593/cbd6ce3d-d6e5-4249-85ab-7df669946d68)
    - Retrieve the Administrator password:
      ```bash
      sudo cat /var/lib/jenkins/secrets/initialAdminPassword
