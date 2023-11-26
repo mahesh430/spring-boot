@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.9.5-amazoncorretto-8-debian-bookworm' // Specify the Maven Docker image
+            image 'maven' // Specify the Maven Docker image
             args '-v /root/.m2:/root/.m2' // Optional: Mount Maven's .m2 directory to cache dependencies
         }
     }
