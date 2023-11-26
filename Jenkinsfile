@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven' // Specify the Maven Docker image
+            image 'maven:3.8.4-openjdk-17' // Specify the Maven Docker image
             args '-v $HOME/.m2:/root/.m2'// Optional: Mount Maven's .m2 directory to cache dependencies
         }
     }
