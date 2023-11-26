@@ -5,6 +5,11 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
+   environment {
+        // Define environment variables
+        DOCKERHUB_CREDENTIALS = credentials('docker-creds') // ID of your Docker Hub credentials in Jenkins
+        IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
+    }
   stages {
     stage('Checkout') {
       steps {
@@ -29,22 +34,31 @@ pipeline {
         }
       }
     }
-    stage('Build and Push Docker Image') {
-      environment {
-        DOCKER_IMAGE = "abhishekf5/ultimate-cicd:${BUILD_NUMBER}"
-        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
-        REGISTRY_CREDENTIALS = credentials('docker-cred')
-      }
+    stage('Build Docker Image') {
       steps {
         script {
-            sh 'docker build -t ${DOCKER_IMAGE} .'
-            def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                dockerImage.push()
+            sh "docker build -t ${IMAGE_TAG} ."
             }
         }
       }
     }
+   stage('Docker Image Scan') {
+            steps {
+                script {
+                   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+                }
+            }
+        }
+   stage('Push to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    // Pushing Image to Docker Hub
+                    sh "docker push ${IMAGE_TAG}"
+                }
+            }
+        }
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
