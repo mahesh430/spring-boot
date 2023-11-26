@@ -39,14 +39,14 @@ pipeline {
                 }
             }
         }
-        stage('Docker Image Scan') {
-            steps {
-                script {
-                    // Ensure Trivy is installed and accessible in the Jenkins environment
-                 //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
-                }
-            }
-        }
+        // stage('Docker Image Scan') {
+        //     steps {
+        //         script {
+        //             // Ensure Trivy is installed and accessible in the Jenkins environment
+        //          //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+        //         }
+        //     }
+        // }
         stage('Push to Docker Hub') {
             steps {
                 script {
