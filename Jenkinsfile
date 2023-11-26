@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven' // Specify the Maven Docker image
-            args '-v /root/.m2:/root/.m2' // Optional: Mount Maven's .m2 directory to cache dependencies
+            args '-v $HOME/.m2:/root/.m2'// Optional: Mount Maven's .m2 directory to cache dependencies
         }
     }
     environment {
