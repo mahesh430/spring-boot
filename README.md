@@ -13,3 +13,4 @@ This is a MVC architecture based application where controller returns a login pa
 
 [Configure SonarQube](https://github.com/mahesh430/cicd-pipeline/blob/main/sonarqube-configuration.md)
 
+[Configure Trivy](https://github.com/mahesh430/cicd-pipeline/blob/main/image-scanner-trivy-setup.md)
