@@ -1,10 +1,16 @@
 pipeline {
   agent {
     docker {
-      image 'maven'
+      image 'mahesh430/maven-jenkins-agent:latest'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
+   environment {
+        // Define environment variables
+        DOCKERHUB_CREDENTIALS = credentials('docker-creds') // ID of your Docker Hub credentials in Jenkins
+        IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
+        SONAR_URL = "http://sonarqube.infonxt.com:9000/"
+    }
   stages {
     stage('Checkout') {
       steps {
@@ -20,35 +26,42 @@ pipeline {
       }
     }
     stage('Static Code Analysis') {
-      environment {
-        SONAR_URL = "http://sonarqube.infonxt.com:9000/"
-      }
+    
       steps {
         withCredentials([string(credentialsId: 'Sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
           sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
         }
       }
     }
-    stage('Build and Push Docker Image') {
-      environment {
-        DOCKER_IMAGE = "mahesh430/ultimate-cicd:${BUILD_NUMBER}"
-        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
-        REGISTRY_CREDENTIALS = credentials('docker-cred')
-      }
+    stage('Build Docker Image') {
       steps {
         script {
-            sh 'docker build -t ${DOCKER_IMAGE} .'
-            def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                dockerImage.push()
+            sh "docker build -t ${IMAGE_TAG} ."
             }
         }
       }
     }
+   stage('Docker Image Scan') {
+            steps {
+                script {
+                   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+                }
+            }
+        }
+   stage('Push to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    // Pushing Image to Docker Hub
+                    sh "docker push ${IMAGE_TAG}"
+                }
+            }
+        }
     stage('Update Deployment File') {
         environment {
-            GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "iam-veeramalla"
+            GIT_REPO_NAME = ""
+            GIT_USER_NAME = "mahesh430"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
