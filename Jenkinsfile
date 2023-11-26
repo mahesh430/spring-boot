@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         // Define environment variables
-        DOCKERHUB_CREDENTIALS = credentials('docker-creds') // ID of your Docker Hub credentials in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials') // ID of your Docker Hub credentials in Jenkins
         IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
         SONAR_URL = "http://sonarqube.infonxt.com:9000/"
     }
