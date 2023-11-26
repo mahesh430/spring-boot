@@ -1,9 +1,9 @@
 pipeline {
     agent {
         docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-    }
+            image 'maven:3.6.3-jdk-11' // Specify the Maven Docker image
+            args '-v /root/.m2:/root/.m2' // Optional: Mount Maven's .m2 directory to cache dependencies
+        }
     }
     environment {
         // Define environment variables
