@@ -15,14 +15,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Passed'
-                //git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
+                // Uncomment the next line if you need to checkout code from Git
+                // git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
             }
         }
         stage('Build and Test') {
             steps {
                 sh 'ls -ltr'
-                // build the project and create a JAR file
-                sh 'mvn clean package'
+                sh 'mvn clean package' // build the project and create a JAR file
             }
         }
         stage('Static Code Analysis') {
@@ -40,25 +40,24 @@ pipeline {
             }
         }
         stage('Docker Image Scan') {
-        //     steps {
-        //         script {
-        //             sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
-        //         }
-        //     }
-        // }
+            steps {
+                script {
+                    // Ensure Trivy is installed and accessible in the Jenkins environment
+                 //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+                }
+            }
+        }
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Login to Docker Hub
                     sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                    // Pushing Image to Docker Hub
                     sh "docker push ${IMAGE_TAG}"
                 }
             }
         }
         stage('Update Deployment File') {
             environment {
-                GIT_REPO_NAME = "spring-boot-k8s-helm" // Add your repository name here
+                GIT_REPO_NAME = "spring-boot-k8s-helm"
                 GIT_USER_NAME = "mahesh430"
             }
             steps {
