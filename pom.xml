@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.mahesh</groupId>
 	<artifactId>spring-boot</artifactId>
-	<version>spring-boot-web</version>
+	<version>web</version>
 	<packaging>jar</packaging>
 	<name>spring-boot</name>
 	<description>Demo project for Spring Boot</description>
