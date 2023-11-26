@@ -58,16 +58,16 @@ pipeline {
         }
         stage('Update Deployment File') {
             environment {
-                GIT_REPO_NAME = "YourRepoName" // Add your repository name here
+                GIT_REPO_NAME = "spring-boot-k8s-helm" // Add your repository name here
                 GIT_USER_NAME = "mahesh430"
             }
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
-                        git config user.email "abhishek.xyz@gmail.com"
-                        git config user.name "Abhishek Veeramalla"
-                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                        git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                        git config user.email "umamahesh690@gmail.com"
+                        git config user.name "Mahesh"
+                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                        git add deployment.yml
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                     '''
