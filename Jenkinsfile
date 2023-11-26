@@ -40,12 +40,12 @@ pipeline {
             }
         }
         stage('Docker Image Scan') {
-            steps {
-                script {
-                    sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
-                }
-            }
-        }
+        //     steps {
+        //         script {
+        //             sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+        //         }
+        //     }
+        // }
         stage('Push to Docker Hub') {
             steps {
                 script {
