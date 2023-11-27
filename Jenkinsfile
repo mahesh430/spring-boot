@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'mahesh430/git-config:latest'
+            image 'mahesh430/git-config'
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
         }
     }
