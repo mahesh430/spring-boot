@@ -12,11 +12,11 @@ pipeline {
         SONAR_URL = "http://sonarqube.infonxt.com:9000/"
     }
     stages {
-        stage('Prepare') {
-            steps {
-                cleanWs() // Clean the workspace at the beginning of the pipeline
-            }
-        }
+        // stage('Prepare') {
+        //     steps {
+        //         cleanWs() // Clean the workspace at the beginning of the pipeline
+        //     }
+        // }
         stage('Checkout') {
             steps {
                 script {
