@@ -61,7 +61,7 @@ pipeline {
                             sh '''
                       
                                 set -e
-
+                                rm -rf /var/lib/jenkins/workspace/complete-cicd/spring-boot-k8s-helm
                                 git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
 
