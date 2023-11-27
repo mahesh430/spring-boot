@@ -75,7 +75,7 @@ pipeline {
                                 git config user.name "Mahesh"
 
                                 # Update the deployment file
-                             sed -i 's/mahesh430\\/complete-cicd:[0-9]*/mahesh430\\/complete-cicd:${BUILD_NUMBER}/g' deployment.yml
+sed -i "s/mahesh430\/complete-cicd:[0-9]*/mahesh430\/complete-cicd:${BUILD_NUMBER}/g" deployment.yml
 
 
                                 # Add and commit changes
