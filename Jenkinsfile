@@ -2,25 +2,18 @@ pipeline {
     agent {
         docker {
             image 'mahesh430/maven-jenkins-docker-agent'
-            args '--rm --user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+            args '--rm --user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
-        // Define environment variables
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials') // ID of your Docker Hub credentials in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
         SONAR_URL = "http://sonarqube.infonxt.com:9000/"
     }
     stages {
-        // stage('Prepare') {
-        //     steps {
-        //         cleanWs() // Clean the workspace at the beginning of the pipeline
-        //     }
-        // }
         stage('Checkout') {
             steps {
                 script {
-
                     echo 'Passed'
                     git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
                 }
@@ -29,7 +22,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 sh 'ls -ltr'
-                sh 'mvn clean package' // build the project and create a JAR file
+                sh 'mvn clean package'
             }
         }
         stage('Static Code Analysis') {
@@ -64,31 +57,25 @@ pipeline {
                     script {
                         try {
                             sh '''
-                                set -e  # Ensure the shell exits immediately if a command exits with a non-zero status
+                                set -e
 
-                                # Clone the repository
                                 git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
 
-                                # Configure Git user
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
 
                                 # Update the deployment file
-sed -i "s/mahesh430\/complete-cicd:[0-9]*/mahesh430\/complete-cicd:${BUILD_NUMBER}/g" deployment.yml
+                                sed -i "s/mahesh430\\/complete-cicd:[0-9]*/mahesh430\\/complete-cicd:${BUILD_NUMBER}/g" deployment.yml
 
-
-                                # Add and commit changes
                                 git add deployment.yml
                                 git commit -m "Update deployment image to version ${BUILD_NUMBER}"
 
-                                # Push the changes
                                 git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                             '''
                         } catch (Exception e) {
-                            // Handle the error
                             echo "Error occurred during deployment file update: ${e.getMessage()}"
-                            throw e  // Rethrow the exception to fail the stage
+                            throw e
                         }
                     }
                 }
