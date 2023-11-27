@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
+                    sh 'sleep 1000'
                     echo 'Passed'
                     git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
                 }
@@ -35,7 +36,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'sleep 1000'
+                    
                     sh "docker build -t ${IMAGE_TAG} ."
                 }
             }
