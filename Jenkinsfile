@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mahesh430/maven-jenkins-docker-agent-v1'
-          args '--user --rm root -v /var/run/docker.sock:/var/run/docker.sock'
+          args '--user root --rm -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
