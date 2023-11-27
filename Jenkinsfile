@@ -61,7 +61,7 @@ pipeline {
                             sh '''
                                 set -e
 
-                                git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                               // git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
 
                                 git config user.email "umamahesh690@gmail.com"
