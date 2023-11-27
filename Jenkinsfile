@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mahesh430/maven-jenkins-docker-agent'
-           // args '--rm --user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+            args '--rm --user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
         }
     }
     environment {
@@ -19,7 +19,7 @@ pipeline {
         // }
         stage('Checkout') {
             steps {
-               
+               sh 'sleep 11111'
                 echo 'Passed'
                 // Uncomment the next line if you need to checkout code from Git
                  git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
