@@ -63,6 +63,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
+                        sleep 10000
                         git config user.email "umamahesh690@gmail.com"
                         git config user.name "Mahesh"
                         sleep 10000
