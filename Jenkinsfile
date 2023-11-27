@@ -55,25 +55,44 @@ pipeline {
                 }
             }
         }
-        stage('Update Deployment File') {
-            environment {
-                GIT_REPO_NAME = "spring-boot-k8s-helm"
-                GIT_USER_NAME = "mahesh430"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                        git clone https://github.com/mahesh430/spring-boot-k8s-helm.git
-                        cd spring-boot-k8s-helm
-                        git config user.email "umamahesh690@gmail.com"
-                        git config user.name "Mahesh"
-                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
-                        git add deployment.yml
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                    '''
-                }
+       stage('Update Deployment File') {
+    environment {
+        GIT_REPO_NAME = "spring-boot-k8s-helm"
+        GIT_USER_NAME = "mahesh430"
+    }
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            // Wrap the steps in a try-catch block to handle potential errors
+            try {
+                sh '''
+                    set -e  # Ensure the shell exits immediately if a command exits with a non-zero status
+
+                    # Clone the repository
+                    git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                    cd ${GIT_REPO_NAME}
+
+                    # Configure Git user
+                    git config user.email "umamahesh690@gmail.com"
+                    git config user.name "Mahesh"
+
+                    # Update the deployment file
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+
+                    # Add and commit changes
+                    git add deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+
+                    # Push the changes
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                '''
+            } catch (Exception e) {
+                // Handle the error
+                echo "Error occurred during deployment file update: ${e.getMessage()}"
+                throw e  // Rethrow the exception to fail the stage
             }
         }
+    }
+}
+
     }
 }
