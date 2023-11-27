@@ -15,7 +15,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Passed'
-                sh 'sleep 10000'
                 // Uncomment the next line if you need to checkout code from Git
                 // git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
             }
@@ -40,14 +39,14 @@ pipeline {
                 }
             }
         }
-        // stage('Docker Image Scan') {
-        //     steps {
-        //         script {
-        //             // Ensure Trivy is installed and accessible in the Jenkins environment
-        //          //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
-        //         }
-        //     }
-        // }
+        stage('Docker Image Scan') {
+            steps {
+                script {
+                    // Ensure Trivy is installed and accessible in the Jenkins environment
+                 //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+                }
+            }
+        }
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -64,7 +63,6 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
-                        sleep 10000
                         git config user.email "umamahesh690@gmail.com"
                         git config user.name "Mahesh"
                         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
