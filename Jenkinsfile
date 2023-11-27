@@ -64,6 +64,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
                         git clone https://github.com/mahesh430/spring-boot-k8s-helm.git
+                        cd spring-boot-k8s-helm
                         git config user.email "umamahesh690@gmail.com"
                         git config user.name "Mahesh"
                         sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
