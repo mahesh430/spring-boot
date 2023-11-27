@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     // Ensure Trivy is installed and accessible in the Jenkins environment
-                 //   sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
+                    sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
                 }
             }
         }
