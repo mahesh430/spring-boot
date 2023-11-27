@@ -22,7 +22,7 @@ pipeline {
                
                 echo 'Passed'
                 // Uncomment the next line if you need to checkout code from Git
-                // git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
+                 git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
             }
         }
         stage('Build and Test') {
