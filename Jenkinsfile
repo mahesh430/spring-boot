@@ -12,17 +12,18 @@ pipeline {
         SONAR_URL = "http://sonarqube.infonxt.com:9000/"
     }
     stages {
-        //   stage('Prepare') {
-        //     steps {
-        //         cleanWs() // Clean the workspace at the beginning of the pipeline
-        //     }
-        // }
+        stage('Prepare') {
+            steps {
+                cleanWs() // Clean the workspace at the beginning of the pipeline
+            }
+        }
         stage('Checkout') {
             steps {
-               sh 'sleep 11111'
-                echo 'Passed'
-                // Uncomment the next line if you need to checkout code from Git
-                 git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
+                script {
+                    sh 'sleep 11111'
+                    echo 'Passed'
+                    git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
+                }
             }
         }
         stage('Build and Test') {
@@ -45,14 +46,6 @@ pipeline {
                 }
             }
         }
-        // stage('Docker Image Scan') {
-        //     steps {
-        //         script {
-        //             // Ensure Trivy is installed and accessible in the Jenkins environment
-        //             sh "trivy image --exit-code 1 --no-progress ${IMAGE_TAG}"
-        //         }
-        //     }
-        // }
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -61,51 +54,50 @@ pipeline {
                 }
             }
         }
-stage('Update Deployment File') {
-    environment {
-        GIT_REPO_NAME = "spring-boot-k8s-helm"
-        GIT_USER_NAME = "mahesh430"
-    }
-    steps {
-        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-            script {  // Enclose try-catch within a script block
-                try {
-                    sh '''
-                        set -e  # Ensure the shell exits immediately if a command exits with a non-zero status
+        stage('Update Deployment File') {
+            environment {
+                GIT_REPO_NAME = "spring-boot-k8s-helm"
+                GIT_USER_NAME = "mahesh430"
+            }
+            steps {
+                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                    script {
+                        try {
+                            sh '''
+                                set -e  # Ensure the shell exits immediately if a command exits with a non-zero status
 
-                        # Clone the repository
-                        git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
-                        cd ${GIT_REPO_NAME}
+                                # Clone the repository
+                                git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
+                                cd ${GIT_REPO_NAME}
 
-                        # Configure Git user
-                        git config user.email "umamahesh690@gmail.com"
-                        git config user.name "Mahesh"
+                                # Configure Git user
+                                git config user.email "umamahesh690@gmail.com"
+                                git config user.name "Mahesh"
 
-                        # Update the deployment file
-                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                                # Update the deployment file
+                                sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
 
-                        # Add and commit changes
-                        git add deployment.yml
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                                # Add and commit changes
+                                git add deployment.yml
+                                git commit -m "Update deployment image to version ${BUILD_NUMBER}"
 
-                        # Push the changes
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                    '''
-                } catch (Exception e) {
-                    // Handle the error
-                    echo "Error occurred during deployment file update: ${e.getMessage()}"
-                    throw e  // Rethrow the exception to fail the stage
+                                # Push the changes
+                                git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                            '''
+                        } catch (Exception e) {
+                            // Handle the error
+                            echo "Error occurred during deployment file update: ${e.getMessage()}"
+                            throw e  // Rethrow the exception to fail the stage
+                        }
+                    }
                 }
             }
         }
     }
-}
-
-
-    }
     post {
         always {
             echo 'One way or another, I have finished'
-            deleteDir()
+            deleteDir() 
         }
+    }
 }
