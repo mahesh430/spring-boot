@@ -14,6 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                sh 'sleep 1000'
                 echo 'Passed'
                 // Uncomment the next line if you need to checkout code from Git
                 // git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
