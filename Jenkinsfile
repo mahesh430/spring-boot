@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    sh 'sleep 1000'
+              //      sh 'sleep 1000'
                     echo 'Passed'
                     git branch: 'main', url: 'https://github.com/mahesh430/spring-boot.git'
                 }
