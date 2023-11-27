@@ -22,6 +22,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 sh 'ls -ltr'
+                sh 'sleep 1000'
                 sh 'mvn clean package'
             }
         }
