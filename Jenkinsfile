@@ -48,6 +48,7 @@ pipeline {
                 script {
                     sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login --username ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                     sh "docker push ${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_TAG}"
                 }
             }
         }
