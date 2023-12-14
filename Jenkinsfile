@@ -9,6 +9,8 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
         SONAR_URL = "http://3.22.92.56:9000/"
+        HELM_CHART_PATH = "helm-deploy"
+
     }
     stages {
         stage('Checkout') {
@@ -49,35 +51,28 @@ pipeline {
                 }
             }
         }
-        stage('Update Deployment File') {
-            environment {
-                GIT_REPO_NAME = "spring-boot-k8s-helm"
-                GIT_USER_NAME = "mahesh430"
-            }
+     stage('Update Helm Chart') {
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     script {
                         try {
                             sh '''
-                      
                                 set -e
-                                rm -rf /var/lib/jenkins/workspace/complete-cicd/spring-boot-k8s-helm
+                                rm -rf /var/lib/jenkins/workspace/complete-cicd/${GIT_REPO_NAME}
                                 git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
 
+                                # Update the Helm chart values file
+                                sed -i "s|repository: mahesh430/complete-cicd.*|repository: mahesh430/complete-cicd\n  tag: ${BUILD_NUMBER}|g" ${HELM_CHART_PATH}/values.yaml
+
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
-
-                                # Update the deployment file
-                                sed -i "s/mahesh430\\/complete-cicd:[0-9]*/mahesh430\\/complete-cicd:${BUILD_NUMBER}/g" deployment.yml
-
-                                git add deployment.yml
-                                git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-
+                                git add ${HELM_CHART_PATH}/values.yaml
+                                git commit -m "Update Helm chart with image version ${BUILD_NUMBER}"
                                 git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                             '''
                         } catch (Exception e) {
-                            echo "Error occurred during deployment file update: ${e.getMessage()}"
+                            echo "Error occurred during Helm chart update: ${e.getMessage()}"
                             throw e
                         }
                     }
