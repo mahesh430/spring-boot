@@ -8,7 +8,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
         IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
-        SONAR_URL = "http://sonarqube.infonxt.com:9000/"
+        SONAR_URL = "http://3.22.92.56:9000/"
     }
     stages {
         stage('Checkout') {
