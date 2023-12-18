@@ -70,7 +70,7 @@ pipeline {
                                 cd ${GIT_REPO_NAME}
                                 # Update the Helm chart values file
                                 # Make sure the sed command is properly terminated
-                                sed -i "s|repository: mahesh430/complete-cicd.*|repository: mahesh430/complete-cicd\n  tag: ${BUILD_NUMBER}|" ${HELM_CHART_PATH}/values.yaml
+                        sed -i "s|repository: mahesh430/complete-cicd.*|repository: mahesh430/complete-cicd:${BUILD_NUMBER}|g" ${HELM_CHART_PATH}/values.yaml
 
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
