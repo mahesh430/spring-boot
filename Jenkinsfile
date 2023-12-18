@@ -61,7 +61,7 @@ pipeline {
                                 set -e
                                 cd ~
                                 pwd
-                                // rm -rf /var/lib/jenkins/workspace/complete-cicd/${GIT_REPO_NAME}
+                                # rm -rf /var/lib/jenkins/workspace/complete-cicd/${GIT_REPO_NAME}
 
                                 git clone https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git
                                 cd ${GIT_REPO_NAME}
