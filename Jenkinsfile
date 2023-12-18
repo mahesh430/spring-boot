@@ -71,7 +71,7 @@ pipeline {
                                 # Update the Helm chart values file
                                 # Make sure the sed command is properly terminated
                         sed -i "s|repository: mahesh430/complete-cicd.*|repository: mahesh430/complete-cicd:${BUILD_NUMBER}|g" ${HELM_CHART_PATH}/values.yaml
-                                sleep 10000
+                                # sleep 10000
                                 git config user.email "umamahesh690@gmail.com"
                                 git config user.name "Mahesh"
                                 git add ${HELM_CHART_PATH}/values.yaml
@@ -87,9 +87,17 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         deleteDir() 
-    //     }
-    // }
+    post {
+       always {
+            // Clean up the workspace
+            deleteDir()
+
+            // Docker cleanup commands (consider adding if appropriate)
+            script {
+                sh "docker container prune -f"
+                sh "docker image prune -f"
+                sh "docker volume prune -f"
+            }
+        }
+    }
 }
