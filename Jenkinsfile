@@ -1,8 +1,8 @@
 pipeline {
     agent {
-        docker {
+       docker {
             image 'mahesh430/maven-jenkins-docker-agent-v1'
-            args "--user root --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/app -u ${env.BUILD_ID}:${env.BUILD_NUMBER} -v /etc/passwd:/etc/passwd:ro"
+            args '--user root --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/app'
         }
     }
     environment {
