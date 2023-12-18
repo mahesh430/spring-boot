@@ -2,7 +2,7 @@ pipeline {
     agent {
        docker {
             image 'mahesh430/maven-jenkins-docker-agent-v1'
-            args '--user root --rm -v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/app'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/app'
         }
     }
     environment {
@@ -88,16 +88,16 @@ pipeline {
         }
     }
     post {
-       always {
-            // Clean up the workspace
-            deleteDir()
+       // always {
+       //      // Clean up the workspace
+       //      deleteDir()
 
-            // Docker cleanup commands (consider adding if appropriate)
-            script {
-                sh "docker container prune -f"
-                sh "docker image prune -f"
-                sh "docker volume prune -f"
-            }
-        }
+       //      // Docker cleanup commands (consider adding if appropriate)
+       //      script {
+       //          sh "docker container prune -f"
+       //          sh "docker image prune -f"
+       //          sh "docker volume prune -f"
+       //      }
+       //  }
     }
 }
