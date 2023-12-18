@@ -10,6 +10,9 @@ pipeline {
         IMAGE_TAG = "mahesh430/complete-cicd:${BUILD_NUMBER}"
         SONAR_URL = "http://3.22.92.56:9000/"
         HELM_CHART_PATH = "helm-deploy"
+        GIT_USER_NAME = "mahesh430"
+        GIT_REPO_NAME = "spring-boot-k8s-helm"
+        
 
     }
     stages {
