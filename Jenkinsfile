@@ -87,7 +87,7 @@ pipeline {
             }
         }
     }
-    post {
+   // post {
        // always {
        //      // Clean up the workspace
        //      deleteDir()
@@ -99,5 +99,5 @@ pipeline {
        //          sh "docker volume prune -f"
        //      }
        //  }
-    }
+  //  }
 }
