@@ -101,3 +101,15 @@ pipeline {
        //  }
   //  }
 }
+   stage('Docker Login') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerhub-creds', variable: 'dockerpwd')]) {
+                    sh 'echo "${dockerpwd}" | docker login -u my-docker-username --password-stdin'
+                }
+            }
+        }
+stage('Docker Push') {
+            steps {
+                sh 'docker push my-image:latest'
+            }
+        }
